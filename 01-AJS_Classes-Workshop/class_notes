@@ -1,0 +1,812 @@
+1. Introduction
+    What is AngularJS ??
+    Why AngularJS ??
+
+2. Environmental Setup
+
+    1. Ecilipse
+    2. Visual Studio
+    3. Webstrom
+
+3. Angular Applications
+
+    1. Static Angular Application.
+    2. Dynamic Angular Application.
+
+4. Directives
+
+5. Services
+    1. Predefined Services
+    2. Custom Services
+
+6. Single Page Applications
+
+    1. ngRoute
+    2. ui.router
+
+
+7. NodeJS Integration with AngularJS
+
+    1. AngularJS - NodeJS - MySQL
+    2. AngularJS - NodeJS - MongoDB
+    3. AngularJS - NodeJS - Static Files
+
+
+    - AngularJS is the Client Side JavaScript Framework
+
+    - AngularJS follows MVC Design Pattern.
+
+        M - Model
+
+        V - View
+
+        C - Controller
+
+    - By using UI Technologies (AngularJS, Angular4.x,reactJS, d3, cs,....)
+      reduces the Burden on the Server by implementing the Business Components
+      at client Side by using MVC.
+
+    - By using UI Technologies we are loosing the Secuirity.
+
+
+bower:
+-----
+    - bower is the Automation tool used to download the required dependencies
+      to develop web application.
+
+    - bower based on nodejs platform.
+
+Installation of bower:
+----------------------
+1. Download and Install the NodeJS
+
+    website   : https://nodejs.org/en/download/
+    file name : node-v6.11.3-x64.msi
+
+2. installation of bower plugin.
+> npm install -g bower
+
+bower.json
+----------
+{
+    "name":"nareshit",
+    "dependencies":{
+        "angular":"latest",
+        "bootstrap":"latest",
+        "d3":"latest",
+            --
+            --
+            --
+    }
+}
+
+>bower install
+
+
+Angular Applications:
+---------------------
+    - by using AngularJS, we can create two types of applications.
+
+        1. Static Angular Application
+        2. Dynamic Angular Application
+
+1. Static Angular Application
+-----------------------------
+    - View won't interacts with controller for dynamic data then such type
+      of angular application Static.
+
+
+Steps to Develop the Static Angular Application:
+------------------------------------------------
+1. download angular by using bower
+
+2. load the angular framework in view.
+
+3. Create the View with Directives.
+
+    1. ng-app
+    2. ng-model
+    3. ng-bind
+
+
+Dynamic Angular Application:
+----------------------------
+    - if view interacts with controller for dynamic data then such type of
+      application called as dynamic angular application.
+
+Step 1:
+    download angular by using bower.
+
+Step 2:
+    load angular framework.
+
+
+Step 3:
+    declare the root directive with logical name.
+    ng-app="app"
+
+
+Step 4:
+    declare the controller
+
+    <div ng-controller="ctrl">
+        {{data}}
+    </div>
+
+Step 5:
+    Create the App Instance.
+
+    var app = angular.module("app",[]);
+
+
+[ Note : where "app" object used to implement the controllers, services, filters,
+       directives,....]
+
+
+Step 6:
+    Implement the Controller.
+
+
+    app.controller("ctrl",my_fun);
+    function my_fun($scope){
+        $scope.data = "Data From DataBase Soon...!";
+
+    }
+
+
+
+Creating the Variables in Controller:
+------------------------------------
+
+$scope.var_one = "Hello";
+{{var_one}}  //Hello
+
+
+Creating the functions in Controller:
+-------------------------------------
+$scope.fun_one = function(){
+    return "Welcome !";
+}
+{{fun_one()}}  //Welcome
+
+
+Creating the JSON Objects in Controller:
+---------------------------------------
+$scope.my_obj = {"key1":"Hello_1"};
+{{my_obj.key1}} //Hello_1
+
+
+
+ng-click directive:
+-------------------
+
+ng-click = "Expression" /
+            "user defined function"/
+            "user defined function with parameters"
+
+Ex.
+    ng-click="count = count+1"
+    ng-click="login()"
+    ng-click="login('admin','admin')"
+
+
+
+
+ng-repeat directive:
+--------------------
+    - this directive used to iterate the list of elements from an array.
+
+
+Services:
+---------
+    - Services can provide the common business logic to multiple controllers.
+
+    - We have two types of services.
+
+        1. custom services
+
+        2. predefined services
+
+1. custom services
+------------------
+    - creating our own service based on application requirement called as
+      Custom Service.
+
+    - In AngularJS, we can create the Custom Services in 5 ways.
+
+    1. factory()
+    2. service()
+    3. value()
+    4. constant()
+    5. provider()
+
+
+creating the custom service by using factory()
+-----------------------------------------------
+
+    - factory() is global function in angularjs used to create the custom services.
+
+
+app.factory("my_service",my_service);
+function my_service(){
+    //return "Welcome to Custom Services !";
+    return new class_one().my_fun();
+}
+app.controller("ctrl_one",ctrl_one);
+function ctrl_one($scope,my_service){
+    $scope.var_one = my_service;
+}
+app.controller("ctrl_two",ctrl_two);
+function ctrl_two($scope,my_service){
+    $scope.var_two = my_service;
+}
+function class_one(){
+    this.my_fun = function(){
+        return "Welcome to JavaScript Classes !";
+    }
+}
+
+
+creating the custom service by using service()
+----------------------------------------------
+app.service("my_service",my_service);
+function my_service(){
+    this.fun_one = function(){
+        return "i am from fun_one";
+    }
+    this.fun_two = function(){
+        return "i am from fun_two";
+    }
+}
+app.controller("ctrl_one",ctrl_one);
+function ctrl_one($scope,my_service){
+    $scope.var_one = my_service.fun_one();
+}
+app.controller("ctrl_two",ctrl_two);
+function ctrl_two($scope,my_service){
+    $scope.var_two = my_service.fun_two();
+}
+
+
+creating the custom services by using value()
+---------------------------------------------
+    - we can create the custom service in the form of a key&value pairs.
+
+ Ex.
+    app.value("my_service","First Value");
+    app.value("my_service","Second Value");
+
+    app.controller("ctrl_one",ctrl_one);
+    function ctrl_one($scope,my_service){
+        $scope.var_one = my_service;
+    }
+    app.controller("ctrl_two",ctrl_two);
+    function ctrl_two($scope,my_service){
+        $scope.var_two = my_service;
+    }
+
+
+creating the custom services by using constant()
+---------------------------------------------
+    - we can create the custom service in the form of a key&value pairs.
+
+ Ex.
+    app.constant("my_service","First Value");
+    app.constant("my_service","Second Value");
+
+    app.controller("ctrl_one",ctrl_one);
+    function ctrl_one($scope,my_service){
+        $scope.var_one = my_service;
+    }
+    app.controller("ctrl_two",ctrl_two);
+    function ctrl_two($scope,my_service){
+        $scope.var_two = my_service;
+    }
+
+
+Creating the Custom Service by using provider()
+-----------------------------------------------
+
+app.provider("my_service",my_service);
+function my_service(){
+    this.db_user="root_one";
+    this.$get = function(){
+        return this.db_user;
+    }
+}
+
+app.config(config);
+function config(my_serviceProvider){
+    my_serviceProvider.db_user = "root_two";
+}
+
+Predefined Services:
+--------------------
+    - the services given by the angular framework called as predefined services.
+
+1. $http
+    - this predefined service used to connect with the servers by using
+      http protocol.
+
+app.service("my_service",my_service);
+function my_service($http){
+    this.fun_one = function(){
+        return $http.get("https://www.w3schools.com/angular/customers.php")
+                    .then(function(posRes){
+                        return posRes;
+                    },
+                    function(errRes){
+                    return errRes;
+        });
+    };
+};
+
+app.controller("ctrl",ctrl);
+function ctrl($scope,my_service){
+    my_service.fun_one().then(function(res){
+            $scope.result = res;
+    });
+}
+<h1>{{result}}</h1>
+
+
+Single Page Applications:
+-------------------------
+
+    - loading the target template to source template without refreshing the whole
+      web page called as single page application.
+
+    - loading the target template to source template in single page applications
+      called as "routing".
+
+    - we can implement the routing in single page applications by using
+      following modules.
+
+        1. ngRoute
+
+        2. ui.router
+
+
+Steps to create the Single Page Application by using ngRoute Module:
+--------------------------------------------------------------------
+
+Step 1:
+    download ngRoute Module.
+
+[Note : "angular-route.min.js" file representing the ngRoute Dependency file]
+
+Step 2:
+    Add the ngRoute Dependency
+
+app.js
+------
+var app = angular.module("app",["ngRoute"]);
+
+
+Step 3:
+    create the target templates
+
+------------
+templates
+    page_one.html
+    page_two.html
+------------
+
+Step 4:
+    create the controllers
+
+----------------
+controllers
+    page_one.js
+    page_two.js
+----------------
+
+
+Step 5:
+    Implement the Mapping in single page application
+
+Rules:
+
+1. mapping should be complete in booting of angular application.
+
+Ex.
+    app.config(config);
+    function config($routeProvider){
+        //Mapping
+    }
+
+    [Note : $routeProvider is the Predefined object used to implement the
+            routing in single page application by using ngRoute Module]
+
+
+
+2. mapping should be in the form of a "key&value" pairs
+
+    - keys are user defined keys
+
+    Ex.
+        1. /page_one
+        2. /page_two
+
+
+    - values are json objects with following json keys
+
+        1. templateUrl
+        2. controller
+
+
+config.js
+---------
+app.config(config);
+function config($routeProvider){
+
+    $routeProvider.when("/page_one" , {templateUrl:"templates/page_one.html",
+                                        controller:"page_one"})
+                  .when("/page_two" , {templateUrl:"templates/page_two.html",
+                                        controller:"page_two"})
+                  .otherwise("/page_one" , {templateUrl:"templates/page_one.html"
+                                            ,controller:"page_one"});
+
+}
+
+Step 6:
+    create the source template
+
+Ex.
+
+index.html
+----------
+
+<html ng-app="app">
+    <a href="#page_one">Page_One</a>
+    <a href="#page_two">Page_One</a>
+    <div ng-view></div>
+</html>
+
+
+Passing the URL Parameters by using "ngRoute Module"
+----------------------------------------------------
+
+index.html
+----------
+<a href="#page_one/111/emp_one/50000">Page_One</a>
+
+config.js
+---------
+$routeProvider.when("/page_one/:param1/:param2/:param3" ,{
+    templateUrl:"templates/page_one.html",
+    controller : "page_one"
+});
+
+
+page_one.js
+-----------
+app.controller("page_one",page_one);
+function page_one($scope, $routeParams){
+    console.log($routeParams.param1);  //111
+    console.log($routeParams.param2);  //emp_one
+    console.log($routeParams.param3);  //50000
+}
+
+
+Steps to Single Page Applications by using ui.router module:
+------------------------------------------------------------
+    - ui.router module is the 3rd party module.
+
+    - by using "ui.router" module we can implement the Nested Routing
+
+    - by using "ui.router" module we can implement the Named Views.
+
+    - by using "ui.router" module we can pass JSON objects as the URL Parameters.
+
+
+Step 1:
+    download "ui.router" module.
+
+Step 2:
+    Add the ui.router module dependency
+
+Step 3:
+    Create the Target Templates
+
+Step 4:
+    Create the Controllers
+
+Step 5:
+    Implement the Mapping.
+
+app.config(config);
+function config($stateProvider,$urlRouterProvider){
+    $stateProvider.state("page_one",{
+                            url:"/page_one",
+                            templateUrl:"templates/page_one.html",
+                            controller:"page_one"
+                 })
+                 .state("page_two",{
+                            url:"/page_two",
+                            templateUrl:"templates/page_two.html",
+                            controller:"page_two"
+                 });
+    $urlRouterProvider.otherwise("/page_one");
+}
+
+Step 6:
+    create the source template
+
+index.html
+----------
+<html ng-app="app">
+    ------
+    ------
+    <div ui-view></div>
+</html>
+
+
+
+Passing the URL Parameters by using "ui.router" module:
+-------------------------------------------------------
+index.html
+----------
+<a ui-sref="page_one({"id":1,"name":"Hello_1","age":20})"><b>Page_One</b></a>
+
+config.js
+---------
+$stateProvider.state("page_one",{
+    url:"/page_one/:param1/:param2/:param3"
+    templateUrl:"templates/page_one.html",
+    controller:"page_one"
+});
+
+page_one.js
+-----------
+app.controller("page_one",page_one);
+function page_one($scope,$stateParams){
+    console.log($stateParams.param1);
+    console.log($stateParams.param2);
+    console.log($stateParams.param3);
+}
+
+
+Nested Routing by using ui.router module:
+-----------------------------------------
+
+-------------
+templates
+    page_one.html
+    page_two.html
+    child_one.html
+    child_two.html
+--------------
+
+page_one.html
+--------------
+<h1>{{var_one}}</h1>
+<a ui-sref=".child_one">Child_One</a>
+<div ui-view></div>
+
+page_two.html
+--------------
+<h1>{{var_two}}</h1>
+<a ui-sref=".child_two">Child_One</a>
+<div ui-view></div>
+
+
+child_one.html
+--------------
+<h1>{{var_three}}</h1>
+
+
+child_two.html
+--------------
+<h1>{{var_four}}</h1>
+
+
+-------------
+controllers
+    page_one.js
+    page_two.js
+    child_one.js
+    child_two.js
+--------------
+
+config.js
+---------
+
+$stateProvider.state("page_one",{
+    url:"/page_one",
+    templateUrl:"templates/page_one.html",
+    controller:"page_one"
+})
+.state("page_one.child_one",{
+    url:"/child_one",
+    templateUrl:"templates/child_one.html",
+    controller:"child_one"
+})
+.state("page_two",{
+    url:"/page_two",
+    templateUrl:"templates/page_two.html",
+    controller:"page_two"
+})
+.state("page_two.child_two",{
+    url:"/child_two",
+    templateUrl:"templates/child_two.html",
+    controller:"child_two"
+});
+
+NodeJS
+------
+    - NodeJS is the Server Side Scripting Language.
+
+    - By using NodeJS we can create both http & tcp servers.
+
+    - NodeJS Supports the Modules (Predefined & Custom Modules)
+
+Modules in NodeJS
+-----------------
+
+1. express
+    - by using this module we can develop the web services.
+
+2. mysql
+    - by using this module we can interact with the mysql database.
+
+3. mongodb
+    - by using this module we can interact with the mongodb.
+
+4. fs
+    - by using this module we can interact with the flat files
+    Ex.
+        static text files
+        static xml files
+        static json files
+
+5. body-parser
+    - by using this module we can set the MIME Type.
+
+[Note : we can download required modules by using
+        package.json file]
+
+
+[Note : we can run the package.json file by using "npm install"
+        command]
+
+
+[Note : when ever we run the "npm install" automatically
+        modules will be downloaded to "node_modules" folder]
+
+
+MySQL
+-----
+---------------------
+
+host : localhost
+
+password(mysql) : root
+
+database : demo
+
+table : products
+
+--------------------
+
+MongoDB:
+--------
+    - As a MongoDB Developer we can store JSON Objects directly
+      into database.
+
+    - MongoDB Follows the Client Server Architecture.
+
+
+MongoDB Queries:
+----------------
+1. start the server
+> mongod
+
+2. connect to server
+> mongo
+
+3. create and switch to database.
+> use demo;
+
+4. create collection
+> db.createCollection("products");
+
+5. insert the objects to products collection.
+> db.products.insert({"p_id":111,"p_name":"p_one","p_cost":10000});
+
+6. query the collection
+>db.products.find();
+
+-----------------------
+address : mongodb://localhost:27017/
+
+database : demo
+
+collection : products
+-------------------------
+
+
+Custom Directive:
+-----------------
+ - Creating our own directive based on application requirement
+   called as Custom Directive.
+
+
+Syntax.
+    app.directive("header",header);
+    function header(){
+        return {
+            restrict: "E" / "A" / "M" / "C"
+                            <header></header>
+                            <div header></div>
+                            <div class="header"></div>
+                            <!-- header -->
+
+            template : "<h1>Hello</h1>"
+
+            templateUrl:"templates/page_one.html"
+
+            controller: "page_one"
+
+            scope :  {
+
+            }
+                ---
+                ---
+                ---
+        }
+    }
+
+
+
+-------------------------------
+CustomDirectiveExample
+        bower.json
+        templates
+              header.html
+        controllers
+              header.js
+        directives
+              header.js
+        app.js
+        index.html
+--------------------------------
+
+Test Cases:
+-----------
+
+    - Karma is Test Runner using "Jasmine" as the
+      framework to write the unit test cases for
+      ui applications like angularjs, angular4, reactjs,...
+
+
+> npm install -g karma
+
+var app = angular.module("app",[]);
+app.controller("ctrl",ctrl);
+function ctrl($scope){
+    $scope.var_one = "hello";
+}
+
+
+{{var_one}}
+
+
+karma.conf.js
+-------------
+describe("my first unit test case",function(){
+    var $controller;
+    module("app");
+    inject("getting controllers",function(_$controller_){
+        $controller=_$controller_;
+    });
+});
+
+
+it("check the value",function(){
+    var ctrl = $controller.get("ctrl",{$scope:$scope});
+    expect(ctr.var_one).equals("Hello")
+        console.log("Test Case Success !");
+    console.log("Test Case Fail !");
+});
+---------------

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app" ng-controller="ctrl">
+
+    <h1>{{var_one}}</h1>
+
+    <h1>{{fun_one()}}</h1>
+    <h1>{{obj[0].key1}}</h1>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.min.js"></script>
+    <script>
+        var app = angular.module("app",[]);
+
+        app.controller("ctrl",ctrl);
+        function ctrl($scope) {
+
+            $scope.var_one = "Hello";
+
+            $scope.fun_one = function () {
+                return "Hello";
+            };
+
+            $scope.obj = [{'key1':'Hello'}];
+
+        }
+    </script>
+
+
+</html>
